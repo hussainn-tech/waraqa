@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WARAQA Live Demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav" aria-label="Demo sections">
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="WARAQA, back to the opening">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 34C7 20 17 8 34 6C35 22 25 34 8 34Z" fill="#7DBB7F"/><path d="M8 34C7 20 17 8 34 6Z" fill="#2E7D4F"/><path d="M10 32C18 24 26 15 32 8" stroke="#EAF2EA" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+      WARAQA
+    </a>
+    <div class="links" id="links">
+      <a href="#story" data-n="1"><span>Story</span></a>
+      <a href="#studio" data-n="2"><span>Studio</span></a>
+      <a href="#making" data-n="3"><span>Making</span></a>
+      <a href="#passport" data-n="4"><span>Passport</span></a>
+      <a href="#days" data-n="5"><span>Days</span></a>
+      <a href="#impact" data-n="6"><span>Impact</span></a>
+      <a href="#finale" data-n="7"><span>WARAQA</span></a>
+    </div>
+    <i class="prog" id="prog"></i>
+  </div>
+</nav>
+
+<!-- ============ OPENING ============ -->
+<header class="hero" id="top">
+  <div class="mesh" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-inner" id="heroInner">
+      <div class="stage" id="stage" aria-hidden="true">
+        <div class="halo"></div>
+        <svg viewBox="0 0 420 420" id="stageSvg">
+          <defs>
+            <linearGradient id="leafGrad" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stop-color="#2E7D4F"/><stop offset=".6" stop-color="#4E9A62"/><stop offset="1" stop-color="#9BD19B"/>
+            </linearGradient>
+            <linearGradient id="paperGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#FBF8F0"/><stop offset="1" stop-color="#E4DCC6"/>
+            </linearGradient>
+            <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#06140E" flood-opacity=".45"/></filter>
+          </defs>
+          <g id="drop">
+            <g id="leafSway">
+              <g filter="url(#soft)">
+                <path id="shapePaper" fill="url(#paperGrad)"/>
+                <path id="shapeLeaf" fill="url(#leafGrad)" opacity="0"/>
+              </g>
+              <path id="leafShade" d="M105 335 C95 280 100 215 130 170 C170 110 240 80 315 75 Z" fill="#1E5A3D" opacity="0"/>
+              <g id="rules" stroke="#CBBF9F" stroke-width="4" stroke-linecap="round" fill="none">
+                <line x1="146" y1="118" x2="254" y2="118" pathLength="1"/>
+                <line x1="146" y1="148" x2="238" y2="148" pathLength="1"/>
+                <line x1="146" y1="178" x2="254" y2="178" pathLength="1"/>
+                <line x1="146" y1="208" x2="226" y2="208" pathLength="1"/>
+                <line x1="146" y1="238" x2="248" y2="238" pathLength="1"/>
+                <line x1="146" y1="268" x2="210" y2="268" pathLength="1"/>
+              </g>
+              <g id="veins" stroke="#EAF2EA" fill="none" stroke-linecap="round">
+                <path d="M112 326 C160 262 228 152 304 84" stroke-width="5" pathLength="1"/>
+                <path d="M150 262 L140 222" stroke-width="3.2" pathLength="1"/>
+                <path d="M182 220 L176 176" stroke-width="3.2" pathLength="1"/>
+                <path d="M214 178 L212 140" stroke-width="3.2" pathLength="1"/>
+                <path d="M246 140 L248 110" stroke-width="3.2" pathLength="1"/>
+                <path d="M168 238 L214 246" stroke-width="3.2" pathLength="1"/>
+                <path d="M204 192 L248 196" stroke-width="3.2" pathLength="1"/>
+                <path d="M240 150 L276 150" stroke-width="3.2" pathLength="1"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="hero-text">
+        <div class="eyebrow fade d1">Mutamahin Startup Pitch Challenge · live demo</div>
+        <div class="word-clip"><h1 class="word" id="word" aria-label="WARAQA"><span>W</span><span>A</span><span>R</span><span>A</span><span>Q</span><span>A</span></h1></div>
+        <div class="ar-name" lang="ar">وَرَقة</div>
+        <p class="tagline fade d2">From your <em>office bin</em> to your <em>ESG report</em>.</p>
+        <p class="hero-sub fade d3">We collect a company's office paper and turn it into its own custom products: Eid cards, invitations, certificates and gifts that can be planted.</p>
+        <div class="cta fade d4">
+          <a class="btn primary" href="#story">Start the demo
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12M3 9l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <button class="btn ghost" id="replay" type="button">Replay opening</button>
+        </div>
+        <div class="chips fade d4"><span class="chip">Submit 26 Nov</span><span class="chip">Present 28 Nov</span><span class="chip">Example client: Alba</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="scrollcue" aria-hidden="true">SCROLL<i></i></div>
+</header>
+<svg class="torn" viewBox="0 0 1440 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46 L0 22 L40 16 L74 26 L118 12 L160 22 L206 10 L248 24 L296 14 L338 26 L384 8 L430 20 L470 14 L520 26 L562 12 L610 22 L652 10 L700 24 L744 16 L790 28 L834 12 L880 22 L926 10 L968 24 L1014 14 L1060 26 L1104 12 L1150 22 L1196 8 L1240 22 L1286 14 L1330 26 L1376 12 L1416 20 L1440 16 L1440 46 Z"/></svg>
+
+<main>
+<!-- ============ 1 STORY ============ -->
+<section class="s" id="story">
+  <div class="wrap">
+    <div class="s-head">
+      <div class="step-tag rv"><b>01</b><span class="eyebrow">The demo story</span></div>
+      <h2 class="split">One client, one order, from their bin to <em>their hands</em></h2>
+      <p class="lead rv d2">Alba orders 500 Eid cards made from its own office paper. Follow that one order through every screen. At the end, you hold one of those cards.</p>
+    </div>
+    <div class="flow rv" id="flow">
+      <div class="fstep"><div class="fdot"><svg viewBox="0 0 24 24" fill="none" stroke="#2E7D4F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c0-8 5-14 15-16 0 9-6 16-15 16z"/><path d="M6 19c4-4 8-8 12-13"/></svg></div><span class="t">STEP 1</span><h3>Opening</h3><p>Paper becomes a leaf. The name explains itself.</p></div>
+      <div class="fstep"><div class="fdot"><svg viewBox="0 0 24 24" fill="none" stroke="#2E7D4F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h5"/><circle cx="16" cy="16" r="2"/></svg></div><span class="t">STEP 2</span><h3>Design the order</h3><p>Alba picks Eid cards, adds its logo and message, chooses a seed.</p></div>
+      <div class="fstep"><div class="fdot"><svg viewBox="0 0 24 24" fill="none" stroke="#2E7D4F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg></div><span class="t">STEP 3</span><h3>Follow the making</h3><p>Pickup, pulp, pressed sheets, printed cards, packed, delivered.</p></div>
+      <div class="fstep"><div class="fdot"><svg viewBox="0 0 24 24" fill="none" stroke="#2E7D4F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h2v2M20 14v6h-6"/></svg></div><span class="t">STEP 4</span><h3>Hold the result</h3><p>Scan the QR passport on the card in your hand.</p></div>
+      <div class="fstep"><div class="fdot"><svg viewBox="0 0 24 24" fill="none" stroke="#2E7D4F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><span class="t">STEP 5</span><h3>Impact counted</h3><p>The order joins Alba's totals and its ESG summary.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 STUDIO ============ -->
+<section class="s" id="studio" style="padding-top:0">
+  <div class="wrap">
+    <div class="s-head">
+      <div class="step-tag rv"><b>S1</b><span class="eyebrow">Custom studio</span></div>
+      <h2 class="split">Design it with <em>their own paper</em></h2>
+      <p class="lead rv d2">Pick a product, add the logo and message, choose a seed. The preview, the price and the paper used update as you go.</p>
+    </div>
+    <div class="studio">
+      <div class="panel rv d1">
+        <div class="field">
+          <span class="lbl" id="lblProd">Product</span>
+          <div class="seg" id="prodSeg" role="group" aria-labelledby="lblProd"></div>
+        </div>
+        <div class="field">
+          <label for="client">Client name (logo goes here)</label>
+          <input class="inp" id="client" value="Alba" maxlength="24" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="arMsg">Arabic message</label>
+          <select class="inp" id="arMsg" lang="ar" dir="rtl">
+            <option>عيدكم مبارك</option>
+            <option>رمضان كريم</option>
+            <option>كل عام وأنتم بخير</option>
+            <option>شكراً لكم</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="enMsg">English message</label>
+          <input class="inp" id="enMsg" value="Eid Mubarak from all of us" maxlength="60" autocomplete="off">
+        </div>
+        <div class="field">
+          <span class="lbl" id="lblSeed">Seed inside</span>
+          <div class="seg" id="seedSeg" role="group" aria-labelledby="lblSeed"></div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="lblCol">Paper colour</span>
+          <div class="swatches" id="colSeg" role="group" aria-labelledby="lblCol"></div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label for="qty">Quantity</label>
+          <div class="range"><input type="range" id="qty" min="100" max="2000" step="50" value="500"><output id="qtyOut" for="qty" class="num">500</output></div>
+        </div>
+      </div>
+      <div class="preview-wrap rv d2">
+        <div class="table" id="table">
+          <div class="prod" id="prod" data-kind="cards">
+            <canvas class="flecks" id="flecks" aria-hidden="true"></canvas>
+            <span class="p-kind" id="pKind">Eid card</span>
+            <div class="logo-slot" id="pLogo">ALBA<small>your logo</small></div>
+            <div class="p-ar" lang="ar" dir="rtl" id="pAr">عيدكم مبارك</div>
+            <div class="p-en" id="pEn">Eid Mubarak from all of us</div>
+            <div class="p-seed" id="pSeed"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20c0-8 5-14 15-16 0 9-6 16-15 16z" fill="#2E7D4F"/></svg><span>contains basil seeds · plant me</span></div>
+          </div>
+          <div class="box3d" aria-hidden="true">
+            <svg viewBox="0 0 220 150">
+              <rect x="20" y="30" width="180" height="115" rx="8" fill="#B9852F"/>
+              <rect x="20" y="30" width="180" height="22" fill="#A0712A"/>
+              <rect x="100" y="30" width="20" height="115" fill="#E9D6AE" opacity=".7"/>
+              <path d="M70 95c0-18 12-30 32-34 0 20-12 32-32 34z" fill="#173F30"/>
+              <text x="110" y="128" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" fill="#173F30" letter-spacing="2">WARAQA</text>
+              <g class="lid"><rect x="14" y="18" width="192" height="18" rx="6" fill="#C89640"/><rect x="100" y="18" width="20" height="18" fill="#E9D6AE" opacity=".7"/></g>
+            </svg>
+          </div>
+          <div class="stamp" id="stamp">ORDER #EID-0312 ✓</div>
+        </div>
+        <div class="totals">
+          <div class="tot"><b id="tQty" class="num">500</b><span id="tUnit">cards</span></div>
+          <div class="tot"><b id="tPrice" class="num">BD 200</b><span>total, design included</span></div>
+          <div class="tot"><b id="tKg" class="num">4.0 kg</b><span>of Alba's own paper</span></div>
+          <div class="tot"><b>12 Mar</b><span>delivery, free in Bahrain</span></div>
+        </div>
+        <div class="confirm-row">
+          <button class="btn dark" id="confirm" type="button">Confirm order</button>
+          <a class="btn line" id="toMaking" href="#making" hidden>Follow the making ↓</a>
+          <span class="hint" id="confirmHint">Prices per item for 100+ items.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 MAKING ============ -->
+<section class="s" id="making" style="padding-top:0">
+  <div class="wrap">
+    <div class="s-head">
+      <div class="step-tag rv"><b>S2</b><span class="eyebrow">Order tracker</span></div>
+      <h2 class="split">Watch your paper become <em>your product</em></h2>
+      <p class="lead rv d2">Order #EID-0312 · 500 Eid cards. Each stage has a date, a note and a studio photo. Tap "Next stage" to move the order live.</p>
+    </div>
+    <div class="tracker">
+      <div class="scene rv d1" id="scene">
+        <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="scene-top"><span>#EID-0312</span><span id="sceneStep">STAGE 4 / 6</span></div>
+        <div class="scene-art" id="sceneArt" aria-hidden="true">
+          <!-- 1 collected -->
+          <svg viewBox="0 0 200 200"><g transform="rotate(-8 100 100)"><rect x="50" y="42" width="96" height="124" rx="4" fill="#E4DCC6"/></g><g transform="rotate(4 100 100)"><rect x="54" y="38" width="96" height="124" rx="4" fill="#F6F3EA"/><g stroke="#CBBF9F" stroke-width="4" stroke-linecap="round"><path d="M70 64h60M70 82h48M70 100h60M70 118h36"/></g></g><path d="M40 150h120l-10 34H50z" fill="#7DBB7F"/><path d="M40 150h120" stroke="#2E7D4F" stroke-width="6" stroke-linecap="round"/></svg>
+          <!-- 2 pulped -->
+          <svg viewBox="0 0 200 200"><ellipse cx="100" cy="120" rx="74" ry="22" fill="#2E7D4F"/><path d="M26 120c0 40 33 60 74 60s74-20 74-60" fill="#7DBB7F"/><ellipse cx="100" cy="120" rx="66" ry="17" fill="#EDE7D6"/><g fill="none" stroke="#CBBF9F" stroke-width="3" stroke-linecap="round"><path d="M64 120c10-8 26-8 36 0s26 8 36 0"><animateTransform attributeName="transform" type="rotate" from="0 100 120" to="360 100 120" dur="6s" repeatCount="indefinite"/></path></g><g fill="#2E7D4F"><circle cx="80" cy="116" r="3"/><circle cx="118" cy="124" r="3"/><circle cx="104" cy="112" r="2.5"/><circle cx="132" cy="114" r="2.5"/></g><path d="M100 30v50" stroke="#B8CFBC" stroke-width="5" stroke-linecap="round"/><path d="M84 56l16 24 16-24" fill="none" stroke="#B8CFBC" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <!-- 3 pressed -->
+          <svg viewBox="0 0 200 200"><rect x="30" y="56" width="140" height="12" rx="4" fill="#B9852F"/><rect x="38" y="74" width="124" height="80" rx="3" fill="#EDE7D6"/><g fill="#2E7D4F" opacity=".7"><circle cx="60" cy="96" r="2.5"/><circle cx="98" cy="120" r="2.5"/><circle cx="136" cy="98" r="2.5"/><circle cx="80" cy="136" r="2.5"/><circle cx="122" cy="138" r="2.5"/><circle cx="110" cy="90" r="2"/></g><g stroke="#DCD3BC" stroke-width="1"><path d="M38 94h124M38 114h124M38 134h124M58 74v80M78 74v80M98 74v80M118 74v80M138 74v80"/></g><rect x="30" y="160" width="140" height="12" rx="4" fill="#B9852F"/><path d="M100 20v28M88 36l12 12 12-12" fill="none" stroke="#B8CFBC" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <!-- 4 printing -->
+          <svg viewBox="0 0 200 200"><rect x="40" y="34" width="120" height="152" rx="5" fill="#EFE8D6"/><rect x="74" y="54" width="52" height="22" rx="4" fill="none" stroke="#173F30" stroke-dasharray="4 3" stroke-width="2"/><text x="100" y="114" text-anchor="middle" font-family="IBM Plex Sans Arabic, sans-serif" font-weight="700" font-size="20" fill="#173F30">عيدكم مبارك</text><rect x="62" y="128" width="76" height="6" rx="3" fill="#2E7D4F" opacity=".6"/><rect x="74" y="142" width="52" height="6" rx="3" fill="#2E7D4F" opacity=".35"/><rect x="34" y="24" width="132" height="6" rx="3" fill="#7DBB7F"><animate attributeName="y" values="24;176;24" dur="3s" repeatCount="indefinite"/></rect></svg>
+          <!-- 5 packed -->
+          <svg viewBox="0 0 200 200"><path d="M30 80l70-30 70 30-70 30z" fill="#C89640"/><path d="M30 80v70l70 30v-70z" fill="#B9852F"/><path d="M170 80v70l-70 30v-70z" fill="#A0712A"/><path d="M65 65l70 30v20" stroke="#E9D6AE" stroke-width="10" fill="none"/><path d="M56 122c0-14 9-23 24-26 0 15-9 24-24 26z" fill="#173F30"/></svg>
+          <!-- 6 delivered -->
+          <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="70" fill="#7DBB7F"/><circle cx="100" cy="100" r="70" fill="none" stroke="#EAF2EA" stroke-width="3" stroke-dasharray="6 8"><animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite"/></circle><path d="M68 102l22 22 44-48" fill="none" stroke="#123528" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="scene-cap"><div><b id="sceneTitle">Printing</b><span id="sceneNote">Made by Fatima &amp; Ali in the WARAQA studio</span></div><span class="photo-tag">STUDIO PHOTO</span></div>
+      </div>
+      <div class="rv d2">
+        <ol class="stages" id="stages"><i class="fill" id="stageFill"></i></ol>
+        <div class="trk-ctrl">
+          <button class="btn dark" id="nextStage" type="button">Next stage →</button>
+          <button class="btn line" id="resetStage" type="button">Restart</button>
+          <label class="toggle"><input type="checkbox" id="conf"> Confidential paper</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 PASSPORT ============ -->
+<section class="s" id="passport" style="padding-top:0">
+  <div class="wrap">
+    <div class="pass" id="pass">
+      <div class="phone rv">
+        <div class="screen">
+          <div class="ps-head">
+            <svg class="mini-leaf" viewBox="0 0 120 120" aria-hidden="true"><path class="grow" d="M20 100C18 55 50 20 105 12C108 62 75 100 20 100Z" fill="#2E7D4F"/><path class="grow" d="M20 100C18 55 50 20 105 12Z" fill="#7DBB7F" opacity=".6" style="transition-delay:.2s"/></svg>
+            <small>IMPACT PASSPORT</small>
+            <h3 class="num">#EID-0312-047</h3>
+          </div>
+          <div class="ps-body">
+            <p class="ps-who">One of <b>500 Eid cards</b> made from <b>Alba's own office paper</b> by <b>Fatima, 22</b>, in the WARAQA studio, Bahrain.</p>
+            <div class="ps-tiles">
+              <div><b class="count" data-to="0.068" data-dec="3">0.068</b><span>trees saved by this order</span></div>
+              <div><b class="count" data-to="106" data-dec="0">106</b><span>litres of water saved</span></div>
+              <div><b class="count" data-to="16.4" data-dec="1">16.4</b><span>kWh of energy saved</span></div>
+              <div><b>Basil</b><span>seed inside</span></div>
+            </div>
+            <div class="plant"><b>Plant me 🌱</b>Soak for 1 hour, lay on soil in a pot, cover lightly, keep moist. Best Nov to Mar.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="s-head">
+          <div class="step-tag rv"><b>S3</b><span class="eyebrow">QR passport</span></div>
+          <h2 class="split">The card in your hand <em>tells its own story</em></h2>
+          <p class="lead rv d2">Every item carries a QR code. Scan it and see whose paper it came from, who made it, the seed inside and what the order saved.</p>
+        </div>
+        <div class="qr-big rv d3">
+          <div class="qr-frame"><div id="qr" role="img" aria-label="QR code that opens this passport"></div><i class="scan" aria-hidden="true"></i></div>
+          <div>
+            <h3 style="font-size:22px;color:var(--forest)">Scan with your phone</h3>
+            <p class="hint" style="margin-top:6px;font-size:15px">On the day, each of the 40 handmade seed-paper cards carries its own code.</p>
+          </div>
+        </div>
+        <dl class="facts rv d4">
+          <div class="fact"><dt>Calculation</dt><dd>EPA factors per tonne of recycled paper: 17 trees, 26.5 m³ of water, 4,100 kWh. This order used about 4 kg.</dd></div>
+          <div class="fact"><dt>Animation</dt><dd>A leaf grows at the top and the numbers count up as the passport opens.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 DAYS ============ -->
+<section class="s" id="days" style="padding-top:0">
+  <div class="wrap">
+    <div class="s-head">
+      <div class="step-tag rv"><b>S4</b><span class="eyebrow">WARAQA Days</span></div>
+      <h2 class="split">Staff make it, <em>then plant it</em></h2>
+      <p class="lead rv d2">A second service for the client. Employees come to the studio, make their own seed paper and plant it. Their hours go into the company's totals.</p>
+    </div>
+    <div class="days">
+      <div class="event rv d1" id="event">
+        <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
+        <canvas id="burst" aria-hidden="true"></canvas>
+        <small>WARAQA DAY · ALBA</small>
+        <h3>Make &amp; plant morning</h3>
+        <div class="when"><span>Sat 13 Dec</span><span>8:00 to 10:30</span><span>WARAQA studio</span></div>
+        <div class="seats">
+          <div class="track"><i id="seatBar"></i></div>
+          <div class="lab"><span><b id="seatN" class="num">28</b> of 40 places taken</span><span id="seatLeft" class="num">12 left</span></div>
+        </div>
+        <div class="row">
+          <button class="btn primary" id="join" type="button">Join this day</button>
+          <span class="price">BD 15 <small>per participant, materials included</small></span>
+        </div>
+      </div>
+      <div class="agenda rv d2">
+        <div class="ag"><time>08:00</time><div><b>Welcome and paper sorting</b><span>Teams bring paper from their own floors.</span></div></div>
+        <div class="ag"><time>08:30</time><div><b>Pulp, seed and press</b><span>Each person makes three sheets with our young makers.</span></div></div>
+        <div class="ag"><time>09:30</time><div><b>Plant together</b><span>Sheets go into pots that stay at the office.</span></div></div>
+        <div class="ag"><time>10:15</time><div><b>Hours logged</b><span>Volunteer hours are added to Alba's totals.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 IMPACT ============ -->
+<section class="s impact" id="impact">
+  <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <div class="s-head">
+      <div class="step-tag rv"><b>S5</b><span class="eyebrow">Client account</span></div>
+      <h2 class="split">Everything we made for Alba, <em>counted</em></h2>
+      <p class="lead rv d2">Orders, paper, volunteer hours and youth work for 2026, with an ESG summary ready to copy into the annual report.</p>
+    </div>
+    <div class="kpis rv d2">
+      <div class="kpi" id="k1"><b class="num" data-k="orders">6</b><span><b class="num" style="display:inline;font-size:inherit;font-family:inherit;font-weight:600;color:#fff" data-k="items">2,840</b> items delivered</span><small>orders</small></div>
+      <div class="kpi" id="k2"><b class="num" data-k="kg">1,840</b><span>kg of paper turned into products</span><small>kilograms</small></div>
+      <div class="kpi" id="k3"><b class="num" data-k="vol">212</b><span>staff volunteer hours</span><small>hours</small></div>
+      <div class="kpi" id="k4"><b class="num" data-k="youth">96</b><span>hours of paid work for young Bahrainis</span><small>hours</small></div>
+    </div>
+    <div class="imp-grid">
+      <div class="chart-card rv d3">
+        <h3>Paper turned into products, by month</h3>
+        <p class="cap">Kilograms, January to August 2026 · example data</p>
+        <svg id="chart" viewBox="0 0 560 240" role="img" aria-label="Bar chart of kilograms per month, rising from 115 kg in January to 383 kg in August"></svg>
+      </div>
+      <div class="esg rv d4">
+        <h3>ESG summary</h3>
+        <div class="esg-out" id="esgOut" aria-live="polite">Press "Generate" to write Alba's Environment and Social summary from these totals.</div>
+        <div class="row">
+          <button class="btn primary small" id="esgGen" type="button">Generate ESG summary</button>
+          <button class="btn ghost small" id="esgCopy" type="button" hidden>Copy text</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINALE ============ -->
+<section class="s finale" id="finale">
+  <div class="wrap">
+    <div class="eyebrow rv">WARAQA · وَرَقة</div>
+    <h2 class="big split" style="margin-top:14px">Your paper.<br>Your products.<br><em>Your impact.</em></h2>
+    <p class="lead rv d2" style="font-size:clamp(17px,1.6vw,21px);color:var(--muted);margin-top:22px">We turn a company's office paper into its own plantable products, made by young Bahrainis, and count the impact for its ESG report.</p>
+
+    <div class="range-grid">
+      <div class="rg rv d1"><b>Eid &amp; Ramadan cards</b><span>Greetings to clients and staff</span><div class="pr">BD 0.400 <small>per card</small></div></div>
+      <div class="rg rv d2"><b>Event invitations</b><span>Launches, iftars, conferences</span><div class="pr">BD 0.600 <small>per invitation</small></div></div>
+      <div class="rg rv d3"><b>Certificates</b><span>Training, awards, volunteering</span><div class="pr">BD 0.750 <small>per certificate</small></div></div>
+      <div class="rg rv d1"><b>Business cards</b><span>A plant-me note on the back</span><div class="pr">BD 5 <small>per box of 100</small></div></div>
+      <div class="rg rv d2"><b>Notebooks</b><span>Conferences, new joiners</span><div class="pr">BD 1.500 <small>each</small></div></div>
+      <div class="rg rv d3"><b>Gift packs</b><span>Card, seed pot and notebook</span><div class="pr">BD 3.500 <small>per pack</small></div></div>
+    </div>
+
+    <div class="roadmap">
+      <div class="rm now rv d1"><h3>In this demo</h3><ul><li>Six screens following one real-looking order</li><li>Live preview, price and paper calculator</li><li>Order tracker you can move on stage</li><li>Working QR passport and ESG summary</li></ul></div>
+      <div class="rm next rv d2"><h3>In the full product</h3><ul><li>Company logins and approvals by marketing</li><li>Pickup scheduling by our drivers</li><li>Quotes, invoices and payment</li><li>Fully bilingual, PDF and Word ESG export</li></ul></div>
+    </div>
+
+    <div class="team" id="team">
+      <div class="mem rv d1"><div class="av">MA</div><b>Maryam Alawadhi</b><span>CEO</span></div>
+      <div class="mem rv d2"><div class="av">N</div><b>Nasreen</b><span>COO</span></div>
+      <div class="mem rv d3"><div class="av">M</div><b>Maryam</b><span>CSO</span></div>
+      <div class="mem rv d1"><div class="av">S</div><b>Saud</b><span>CMO</span></div>
+      <div class="mem rv d2"><div class="av">A</div><b>Aysha</b><span>CFO</span></div>
+      <div class="mem rv d3"><div class="av">F</div><b>Fatema</b><span>CHRO</span></div>
+    </div>
+    <div class="cta rv" style="margin-top:48px">
+      <a class="btn dark" href="#top" id="again">Play it again ↑</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="brand">
+      <svg viewBox="0 0 40 40" aria-hidden="true" width="22" height="22"><path d="M8 34C7 20 17 8 34 6C35 22 25 34 8 34Z" fill="#7DBB7F"/><path d="M8 34C7 20 17 8 34 6Z" fill="#2E7D4F"/></svg>WARAQA</span>
+    <span>Mutamahin Startup Pitch Challenge 2026. Alba is an illustrative example client; orders and figures are examples, not real transactions.</span>
+    <span>Present with <span class="kbd">←</span> <span class="kbd">→</span></span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><i></i><span id="toastTxt"></span></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
