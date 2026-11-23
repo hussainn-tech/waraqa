@@ -1,7 +1,7 @@
 (function(){
 "use strict";
 document.documentElement.classList.add('js');
-var PUBLIC_URL = ''; // set to the hosted page URL so the QR opens the passport
+var PUBLIC_URL = 'https://hussainn-tech.github.io/waraqa/'; // set to the hosted page URL so the QR opens the passport
 var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var $ = function(s,r){return (r||document).querySelector(s)};
 var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
