@@ -1,60 +1,61 @@
 # WARAQA · وَرَقة
 
-**From your office bin to your ESG report.**
+**From paper to purpose.** WARAQA collects a company's office paper and turns it into that company's own plantable products, printed with its logo and made by young Bahrainis, then counts the impact for its ESG report.
 
-WARAQA collects a company's office paper and turns it into that company's own custom, plantable products: Eid cards, invitations, certificates, notebooks and gift packs, made by young Bahrainis. This repository holds the live demo for the **Mutamahin Startup Pitch Challenge 2026** (submit 26 Nov, present 28 Nov).
+This repository is the live product demo for the **Mutamahin Startup Pitch Challenge 2026**: an opening film followed by a working client app, **WARAQA for Business**.
 
-## The demo
+## The 60-second demo
 
-One example order runs through the whole demo: Alba orders 500 Eid cards made from its own office paper.
+| Time | What you do | What the judges see |
+|------|-------------|---------------------|
+| 0–8 s | Open the page | An office memo flutters down, is shredded into strips, swirls into pulp while seeds fall in, then the fibres fly into a living leaf that becomes the WARAQA mark. |
+| 8–15 s | Press **Space**, type a company name (a judge's company works well) | The app opens through the leaf. The logo builds as you type, with an estimate of how much paper an office that size throws away. |
+| 15–20 s | **Create account** | The overview: paper in stock, the next pickup, upcoming occasions (National Day, Ramadan, Eid), impact so far. |
+| 20–38 s | Click **Design** on Bahrain National Day, switch products, pick a seed, **Place order** | The live mock-up changes with every choice and always shows the client's logo. The order is packed into a WARAQA box and flies into Orders. |
+| 38–50 s | **Watch it being made** | Six animated stages: pickup, certified shredding, pulping, seed pressing, logo printing, delivery. A judge can scan the QR code to open the item's impact passport on their phone. |
+| 50–60 s | **Impact & ESG** → **Write my ESG summary** | Trees, water, energy and landfill saved, progress towards the 15-tonne Year-1 goal, and an ESG paragraph (GRI 306-4) typed out from the numbers. |
 
-| # | Screen | What happens |
-|---|--------|--------------|
-| S0 | Opening | A sheet of paper drops in, gets written on, then morphs into a leaf with a burst of paper fibres. |
-| S1 | Custom studio | Pick a product, logo name, Arabic and English message, seed, paper colour and quantity. The preview, price and paper used update live. Confirm packs the item into a WARAQA box. |
-| S2 | Order tracker | Six stages from paper collected to delivered. "Next stage" moves the order live on stage. Delivery updates the impact totals. |
-| S3 | QR passport | A phone passport with count-up savings and a working QR code that opens `#passport`. |
-| S4 | WARAQA Days | Book a make-and-plant morning. Seats fill and seeds burst. |
-| S5 | Client account | Totals, a monthly chart and a generated ESG summary you can copy. |
+### Keys
 
-### Presenting
+- `Space` / `Enter`: enter the app from the opening · `Esc`: skip the opening
+- `N` on an order: move it to the next production stage
+- `D`: show presenter controls (replay the opening, next stage, start again with a new company)
+- Add `?nointro` to the URL to skip the opening, for example while rehearsing
 
-- `→` / `PageDown`: next section · `←` / `PageUp`: previous section
-- `N` while on the tracker: next stage
-- "Replay opening" in the hero, or "Play it again" at the end
-- Open `index.html#passport` to jump straight to the passport (this is where the QR code points)
+## What is in the app
+
+- **Sign-up**: company name, brand colour, logo upload (or drag a logo file onto the studio preview later), staff size.
+- **Overview**: paper in stock, next pickup, upcoming occasions with order-by dates, orders, weekly pickups, WARAQA Days.
+- **Design studio**: 9 products (greeting cards, invitations, certificates, business cards, notebooks, bookmarks, desk calendars, grow pots, gift packs), each with its own options. Seeds follow Bahrain's seasons: winter (sweet alyssum, sweet basil, marigold) and summer (purslane, zinnia, holy basil).
+- **Orders**: live production tracker, certified shredding note, a real QR code, the approved design.
+- **Impact & ESG**: EPA factors per tonne (17 trees, 26,500 L water, 4,100 kWh, 2,500 L landfill), the Year-1 goal and a generated ESG summary you can copy or download.
+- **WARAQA Days**: book a make-and-plant morning for staff.
+- **Impact passport** (`#/p/…`): the phone page each QR code opens.
+
+All dates are calculated from today's date, so the demo always looks current. Data is saved in the browser; **D → New company** resets it.
 
 ## Run locally
 
-It is a static site with no build step:
+It is a static site with no build step. The QR library is bundled in `assets/vendor`, so the app works without internet. Only the web fonts need a connection, and system fonts are used if there is none.
 
 ```bash
 npx http-server@14.1.1 -p 5173
 # then open http://localhost:5173
 ```
 
-Or open `index.html` directly in a browser.
-
 ## Hosting
 
-Any static host works (GitHub Pages, Netlify, Cloudflare Pages). For GitHub Pages: **Settings → Pages → Deploy from branch → `main` / root**.
-
-When the site has its final URL, set `PUBLIC_URL` at the top of `assets/js/app.js` so the QR code always points to the hosted passport, for example:
-
-```js
-var PUBLIC_URL = 'https://<user>.github.io/waraqa/';
-```
+GitHub Pages: **Settings → Pages → Deploy from a branch → `main` / root**. The QR code uses the page's own address when it is hosted; when the demo runs from `localhost` it points to `PUBLIC_URL` at the top of `assets/js/app.js`.
 
 ## Structure
 
 ```
-index.html            page markup, sections S0 to S5
-assets/css/styles.css design tokens, layout, animations
-assets/js/app.js      opening morph, particles, studio, tracker, passport, days, impact
+index.html              opening film + app shell
+assets/css/app.css      all styling
+assets/js/data.js       products, seeds, occasions, impact factors, saved state
+assets/js/render.js     seed-paper textures, client logo, product mock-ups, icons
+assets/js/intro.js      the opening film (canvas particles + SVG leaf)
+assets/js/app.js        screens, routing, order flow, ESG writer, passport
+assets/img/             team photos and seed photos
+assets/vendor/          qrcode.js (MIT)
 ```
-
-The only outside dependencies are Google Fonts (Bricolage Grotesque, IBM Plex Sans, IBM Plex Sans Arabic, IBM Plex Mono) and `qrcodejs` 1.0.0 from cdnjs. Animations respect `prefers-reduced-motion`.
-
-## Data note
-
-Alba is an illustrative example client. Orders, quantities and figures are examples, not real transactions. Impact numbers use EPA factors per tonne of recycled paper: 17 trees, 26.5 m³ of water and 4,100 kWh.
