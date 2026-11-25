@@ -22,7 +22,7 @@ This repository is the live product demo for the **Mutamahin Startup Pitch Chall
 ### Company menu
 
 Tap the company card in the sidebar (or the logo at the top right on a phone) to:
-- switch between demo companies: Alba, National Bank of Bahrain, BBK, Batelco, Bapco Energies, Gulf Air, University of Bahrain and GFH (names only; all figures are illustrative),
+- switch between four demo companies: Alba (main), National Bank of Bahrain, Bapco Energies and University of Bahrain (logos from Wikimedia; all figures are illustrative),
 - start from scratch,
 - replay the opening.
 

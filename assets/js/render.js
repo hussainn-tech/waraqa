@@ -68,8 +68,9 @@ W.deckle = deckle;
 W.logo = function(c, x, y, size, o){
   o=o||{}; var ink=o.ink||c.color||'#123528';
   if(c.logo){
-    var w=size*(o.wide||2.4);
-    return '<image href="'+c.logo+'" x="'+(x-w/2)+'" y="'+(y-size/2)+'" width="'+w+'" height="'+size+'" preserveAspectRatio="xMidYMid meet" style="mix-blend-mode:'+(o.light?'screen':'multiply')+'"/>';
+    var w=size*(o.wide||2.4), bg='';
+    if(o.light) bg='<rect x="'+(x-w/2-size*.18)+'" y="'+(y-size/2-size*.18)+'" width="'+(w+size*.36)+'" height="'+(size*1.36)+'" rx="'+(size*.2)+'" fill="#F6F2E7" opacity=".94"/>';
+    return bg+'<image href="'+c.logo+'" x="'+(x-w/2)+'" y="'+(y-size/2)+'" width="'+w+'" height="'+size+'" preserveAspectRatio="xMidYMid meet" style="mix-blend-mode:multiply"/>';
   }
   var ini=W.mono(c), r=size/2, s='', isz=ini.length>2?.3:ini.length>1?.4:.5;
   s+='<g class="lg">';
@@ -342,7 +343,7 @@ W.icon = function(k,s){ return '<svg class="ic" width="'+(s||20)+'" height="'+(s
 
 /* ---------- passport link payload ---------- */
 W.encodePass = function(o,c){
-  var ff=o.f&&JSON.stringify(o.f).length<220?o.f:undefined; var p={c:c.name, n:W.mono(c), k:c.color, f:ff, p:o.prod, s:o.seed, i:o.id, q:o.qty, m:o.maker, d:o.created.slice(0,10)};
+  var ff=o.f&&JSON.stringify(o.f).length<220?o.f:undefined; var p={l:(c.logo&&c.logo.length<80)?c.logo:undefined, c:c.name, n:W.mono(c), k:c.color, f:ff, p:o.prod, s:o.seed, i:o.id, q:o.qty, m:o.maker, d:o.created.slice(0,10)};
   try{ return btoa(unescape(encodeURIComponent(JSON.stringify(p)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }catch(e){ return ''; }
 };
 W.decodePass = function(s){

@@ -94,14 +94,10 @@ W.MAKERS = ['Fatima, 22','Ali, 20','Noora, 23','Hasan, 21','Zainab, 24','Yusuf, 
 
 /* ---------- Demo companies (illustrative, names only, no real logos) ---------- */
 W.DEMO_COMPANIES = [
-  {id:'alba',   name:'Alba',                     mono:'A',   sector:'Industry',   staff:3000, color:'#8C1D2C', offices:'Askar plant and offices'},
-  {id:'nbb',    name:'National Bank of Bahrain', mono:'NBB', sector:'Bank',       staff:800,  color:'#0E3A5B', offices:'HQ and branches'},
-  {id:'bbk',    name:'BBK',                      mono:'BBK', sector:'Bank',       staff:800,  color:'#0F5C55', offices:'HQ and branches'},
-  {id:'batelco',name:'Batelco',                  mono:'B',   sector:'Telecom',    staff:1000, color:'#B3261E', offices:'Hamala HQ and shops'},
-  {id:'bapco',  name:'Bapco Energies',           mono:'BE',  sector:'Energy',     staff:3000, color:'#1E3A6B', offices:'Awali offices'},
-  {id:'gulfair',name:'Gulf Air',                 mono:'GF',  sector:'Aviation',   staff:2000, color:'#6B4E16', offices:'Muharraq HQ'},
-  {id:'uob',    name:'University of Bahrain',    mono:'UOB', sector:'University', staff:1500, color:'#3A2E6B', offices:'Sakhir campus'},
-  {id:'gfh',    name:'GFH Financial Group',      mono:'GFH', sector:'Bank',       staff:300,  color:'#1E1E1E', offices:'Bahrain Harbour HQ'}
+  {id:'alba',  name:'Alba',                     mono:'A',   sector:'Industry',   staff:3000, color:'#1D3C8F', logo:'assets/img/logos/alba.svg',  offices:'Askar plant and offices'},
+  {id:'nbb',   name:'National Bank of Bahrain', mono:'NBB', sector:'Bank',       staff:800,  color:'#C8102E', logo:'assets/img/logos/nbb.svg',   offices:'HQ and branches'},
+  {id:'bapco', name:'Bapco Energies',           mono:'BE',  sector:'Energy',     staff:3000, color:'#1E2A78', logo:'assets/img/logos/bapco.svg', offices:'Awali offices'},
+  {id:'uob',   name:'University of Bahrain',    mono:'UOB', sector:'University', staff:1500, color:'#2B2A7A', logo:'assets/img/logos/uob.png',   offices:'Sakhir campus'}
 ];
 W.BRAND_COLS = ['#0E3A5B','#8C1D2C','#0F5C55','#6B4E16','#3A2E6B','#1E1E1E'];
 
@@ -140,7 +136,7 @@ W.mono = function(c){ return (c&&c.mono) || W.initials(c&&c.name); };
 W.slug = function(name){ return (name||'company').toLowerCase().replace(/[^a-z0-9]+/g,'').slice(0,18)||'company'; };
 
 /* ---------- Saved state ---------- */
-var KEY='waraqa.v3';
+var KEY='waraqa.v4';
 W.load = function(){ try{ var s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.company&&s.v===3) return s; }catch(e){} return null; };
 W.save = function(){ try{ localStorage.setItem(KEY, JSON.stringify(W.S)); }catch(e){} };
 W.clear = function(){ try{ localStorage.removeItem(KEY); }catch(e){} W.S=null; };
@@ -156,7 +152,7 @@ function baseState(c, joined){
 /* A believable 11-week pilot history for a demo company. */
 W.createDemo = function(id){
   var dc=W.DEMO_COMPANIES.filter(function(x){return x.id===id})[0]||W.DEMO_COMPANIES[0];
-  var c={name:dc.name, mono:dc.mono, color:dc.color, logo:null, staff:dc.staff, sector:dc.sector, offices:dc.offices, demo:dc.id};
+  var c={name:dc.name, mono:dc.mono, color:dc.color, logo:dc.logo, staff:dc.staff, sector:dc.sector, offices:dc.offices, demo:dc.id};
   var t=W.today(), weeks=11, joined=W.addDays(t,-weeks*7-2);
   var S=baseState(c,joined);
   var perWeek=Math.min(c.staff,850)*W.KG_PER_STAFF_YEAR/52*0.35;

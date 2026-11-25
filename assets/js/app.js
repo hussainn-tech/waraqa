@@ -33,11 +33,7 @@ function readLogo(file,cb){
   if(!file||!/^image\//.test(file.type)) return;
   var fr=new FileReader(); fr.onload=function(){ var img=new Image(); img.onload=function(){ var s=Math.min(1,360/Math.max(img.width,img.height)), c=document.createElement('canvas'); c.width=Math.round(img.width*s); c.height=Math.round(img.height*s); c.getContext('2d').drawImage(img,0,0,c.width,c.height); cb(c.toDataURL('image/png')); }; img.src=fr.result; }; fr.readAsDataURL(file);
 }
-var MARK = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M37 9 C 22 5, 8 15, 9 29 C 10 38, 22 43, 38 37" fill="none" stroke="#7DBB7F" stroke-width="3.6" stroke-linecap="round"/>'+
-  '<path d="M26 6 C 33 3, 41 6, 40 13 C 36 10, 31 10, 26 6Z" fill="#F6F3EA"/>'+
-  '<path d="M22 36 C 22 30, 23 26, 26 22" stroke="#B9E0AE" stroke-width="2.2" fill="none" stroke-linecap="round"/>'+
-  '<path d="M23 29 C 17 29, 14 25, 14 21 C 19 21, 23 24, 23 29Z" fill="#7DBB7F"/><path d="M24.5 25 C 30 25, 33 21, 34 17 C 28 17, 25 20, 24.5 25Z" fill="#A9D7A2"/>'+
-  '<path d="M30 37 v-8 h2 v-2 h2 v2 h2 v8z" fill="#CFE6CC" opacity=".55"/><path d="M38 37 l1.6-12 1.6 12z" fill="#CFE6CC" opacity=".55"/></svg>';
+var MARK = '<img src="assets/img/waraqa-mark.webp" alt="" width="258" height="192">';
 W.MARK=MARK;
 
 /* ---------- routing with View Transitions ---------- */
@@ -83,7 +79,7 @@ function shell(){
 function openMenu(anchor){
   var m=$('#menu'), S=W.S;
   m.innerHTML='<div class="m-h">Demo companies <small>illustrative data</small></div>'+
-    W.DEMO_COMPANIES.map(function(d){ var on=S&&S.company.demo===d.id; return '<button type="button" class="m-i'+(on?' on':'')+'" data-demo="'+d.id+'">'+W.logoHTML({name:d.name,mono:d.mono,color:d.color},30)+'<span><b>'+esc(d.name)+'</b><small>'+esc(d.sector)+' · '+W.planFor(d.staff).name+' plan</small></span>'+(on?W.icon('check',16):'')+'</button>'; }).join('')+
+    W.DEMO_COMPANIES.map(function(d){ var on=S&&S.company.demo===d.id; return '<button type="button" class="m-i'+(on?' on':'')+'" data-demo="'+d.id+'">'+W.logoHTML({name:d.name,mono:d.mono,color:d.color,logo:d.logo},30)+'<span><b>'+esc(d.name)+'</b><small>'+esc(d.sector)+' · '+W.planFor(d.staff).name+' plan</small></span>'+(on?W.icon('check',16):'')+'</button>'; }).join('')+
     '<div class="m-sep"></div><button type="button" class="m-i act" data-act="scratch">'+W.icon('plus',18)+'<span><b>Start from scratch</b><small>Your own company, no demo data</small></span></button>'+
     '<button type="button" class="m-i act" data-act="intro">'+W.icon('play',18)+'<span><b>Replay the opening</b><small>The 10-second film</small></span></button>';
   m.hidden=false;
@@ -114,7 +110,7 @@ function renderStart(){
       '<p>We collect the paper your offices throw away, turn it into plantable products with your logo, and count every kilogram for your ESG report.</p>'+
       '<div class="steps"><span>Yesterday\'s waste</span><span>Today\'s creation</span><span>Tomorrow\'s growth</span></div></div></div>'+
     '<form class="start-form" id="startForm" autocomplete="off">'+
-      '<a class="brand" href="#/home" aria-label="WARAQA"><span class="mark" style="width:44px;height:44px">'+MARK.replace('#F6F3EA','#E4DCC6')+'</span><span class="bw"><b>WARAQA</b><small>for Business</small></span></a>'+
+      '<a class="brand" href="#/home" aria-label="WARAQA"><span class="mark" style="width:44px;height:44px">'+MARK+'</span><span class="bw"><b>WARAQA</b><small>for Business</small></span></a>'+
       '<div class="rv"><h1>Set up your company</h1><p class="lede">Start with a free 3-month pilot. Your logo goes on every product, your paper goes into every sheet.</p></div>'+
       '<div class="field rv d1"><label for="cName">Company name</label><input class="inp big" id="cName" maxlength="32" placeholder="Type your company name" required></div>'+
       '<div class="logo-live rv d2" id="logoLive"></div>'+
@@ -669,7 +665,7 @@ function writeESG(){
 function loadScript(src,cb){ if(window.jspdf) return cb(); var s=document.createElement('script'); s.src=src; s.onload=cb; s.onerror=function(){ toast('Could not load the PDF tool.'); }; document.head.appendChild(s); }
 function makePDF(){
   var b=$('#pdfBtn'), lbl=b.querySelector('span'); b.disabled=true; lbl.textContent='Preparing PDF…';
-  loadScript('assets/vendor/jspdf.umd.min.js?v=3',function(){ try{ buildPDF(); toast('Your ESG report is downloading.'); }catch(e){ console.error(e); toast('Sorry, the PDF could not be made here.'); } b.disabled=false; lbl.textContent='Download ESG report (PDF)'; });
+  loadScript('assets/vendor/jspdf.umd.min.js?v=4',function(){ try{ buildPDF(); toast('Your ESG report is downloading.'); }catch(e){ console.error(e); toast('Sorry, the PDF could not be made here.'); } b.disabled=false; lbl.textContent='Download ESG report (PDF)'; });
 }
 function buildPDF(){
   var S=W.S, c=S.company, T=W.totals(), i=T.imp, pl=W.plan(S.plan);
@@ -775,8 +771,8 @@ function renderDays(){
    ===================================================================== */
 function renderPassport(){
   app.classList.add('bare');
-  var d=W.decodePass(route.id)||{c:'Alba',n:'A',k:'#8C1D2C',p:'cards',s:'marigold',i:'WQ-0000-000',q:500,m:'Fatima, 22',d:new Date().toISOString().slice(0,10)};
-  var c={name:d.c,mono:d.n,color:d.k}, p=W.prod(d.p), sd=W.seed(d.s), o={prod:d.p,seed:d.s,qty:d.q,f:d.f||W.defaults(d.p,c)};
+  var d=W.decodePass(route.id)||{c:'Alba',n:'A',k:'#1D3C8F',l:'assets/img/logos/alba.svg',p:'cards',s:'marigold',i:'WQ-0000-000',q:500,m:'Fatima, 22',d:new Date().toISOString().slice(0,10)};
+  var c={name:d.c,mono:d.n,color:d.k,logo:d.l}, p=W.prod(d.p), sd=W.seed(d.s), o={prod:d.p,seed:d.s,qty:d.q,f:d.f||W.defaults(d.p,c)};
   var kg=p.g*d.q/1000, imp=W.impactOf(kg), key='waraqa.planted.'+d.i, planted=0; try{ planted=+(localStorage.getItem(key)||0); }catch(e){}
   var base=Math.round(d.q*.31), first=(d.m||'Fatima').split(',')[0];
   view.innerHTML='<div class="pp"><div class="pp-in">'+
