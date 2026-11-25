@@ -92,7 +92,7 @@ function caption(n,txt){
 }
 
 /* ---------- timeline ---------- */
-var T = {fall:[.35,2.25], shred:2.35, pulp:3.15, seeds:3.35, leaf:4.55, solid:5.95, lock:6.7, cta:7.7};
+var T = {fall:[.4,2.5], shred:2.6, pulp:3.5, seeds:3.7, leaf:5.0, solid:6.5, lock:7.5, cta:9.4};
 
 function frame(now){
   if(done) return;
@@ -101,7 +101,7 @@ function frame(now){
 
   /* 1. the memo falls like real paper: pendulum glide with a soft landing */
   if(t<T.shred){
-    if(t>.2) caption('01','Office paper');
+    if(t>.2) caption('01','Yesterday\u2019s waste');
     var p=clamp((t-T.fall[0])/(T.fall[1]-T.fall[0])), damp=1-eo(p);
     var y=lerp(-Ht*.85, 0, eo(p)*.94 + p*.06), sw=Math.sin(t*3.1);
     var x=sw*Math.min(140,Wd*.16)*damp;
@@ -123,7 +123,7 @@ function frame(now){
   /* 2-4. shred → pulp → leaf */
   if(t<T.pulp+.2) caption('02','Collected and securely shredded');
   else if(t<T.leaf+.15) caption('03','Pulped, with seeds');
-  else if(t<T.lock) caption('04','Grown into something new');
+  else if(t<T.lock) caption('04','Tomorrow\u2019s growth');
 
   if(fade>0){
     cx.lineCap='round';
@@ -168,7 +168,7 @@ function frame(now){
   /* 5. solid leaf */
   if(t>=T.solid && !intro.classList.contains('solid')) solidify();
   if(t>=T.lock && !intro.classList.contains('lock')){ intro.classList.add('lock'); cap.classList.remove('on'); }
-  if(t>=T.cta && !intro.classList.contains('cta')){ intro.classList.add('cta'); var b2=$('#enter'); if(b2) b2.focus({preventScroll:true}); }
+  if(t>=T.cta && !intro.classList.contains('cta')){ intro.classList.add('cta'); var b2=$('#startDemo'); if(b2) b2.focus({preventScroll:true}); }
 }
 
 /* floating seed fluff, always gently rising */
@@ -188,8 +188,8 @@ function solidify(){
 }
 
 /* ---------- public ---------- */
-W.introPlay = function(cb){
-  onEnter=cb; done=false; parts=[]; seeds=[]; lastCap=''; phase='';
+W.introPlay = function(){
+  done=false; parts=[]; seeds=[]; lastCap=''; phase='';
   if(!cv) build();
   intro.hidden=false; intro.className='intro';
   document.body.classList.add('intro-on');
@@ -207,14 +207,12 @@ W.introSkip = function(){
 };
 
 /* the app grows out of the leaf: a leaf-shaped window that opens to full screen */
-W.introExit = function(){
+W.introExit = function(after){
   if(done) return; done=true;
   var app=document.getElementById('app'), r=leafRect();
   var cxp=r.left+r.width*(236/400), cyp=r.top+r.height*(190/400), s0=r.width/400;
   function pathAt(k){ var s=s0*k, P=LEAF_PTS.map(function(p){ return (cxp+(p[0]-236)*s).toFixed(1)+' '+(cyp+(p[1]-190)*s).toFixed(1); });
     return 'path("M'+P[0]+' C'+P[1]+' '+P[2]+' '+P[3]+' C'+P[4]+' '+P[5]+' '+P[6]+' C'+P[7]+' '+P[8]+' '+P[9]+' C'+P[10]+' '+P[11]+' '+P[12]+' Z")'; }
-  var cb=onEnter; onEnter=null;
-  if(cb) cb();
   if(reduce || !CSS.supports('clip-path','path("M0 0 L1 1 Z")')){ finish(); return; }
   app.style.clipPath=pathAt(.05); app.classList.add('opening');
   intro.classList.add('leaving');
@@ -224,7 +222,7 @@ W.introExit = function(){
     app.style.clipPath=pathAt(.08*Math.pow(big/.08,e)); // geometric growth reads as a steady zoom through the leaf
     if(p<1) requestAnimationFrame(step); else finish();
   })(st);
-  function finish(){ app.style.clipPath=''; app.classList.remove('opening'); intro.hidden=true; intro.className='intro'; document.body.classList.remove('intro-on'); cancelAnimationFrame(raf); }
+  function finish(){ app.style.clipPath=''; app.classList.remove('opening'); intro.hidden=true; intro.className='intro'; document.body.classList.remove('intro-on'); cancelAnimationFrame(raf); if(after) after(); }
 };
 W.introActive = function(){ return !done && intro && !intro.hidden; };
 

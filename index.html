@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Allura&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Cormorant+Garamond:ital,wght@1,500&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Marcellus&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/app.css?v=2">
+<link rel="stylesheet" href="assets/css/app.css?v=3">
 </head>
 <body class="intro-on">
 
@@ -69,16 +69,16 @@
       <h1 class="wordmark" aria-label="WARAQA"><span>W</span><span>A</span><span>R</span><span>A</span><span>Q</span><span>A</span></h1>
       <div class="w-ar" lang="ar" dir="rtl">وَرَقة</div>
       <p class="w-tag">From paper to purpose</p>
-      <p class="w-sub">Your office paper, back as your company's own plantable gifts. Made by young Bahrainis.</p>
+      <p class="w-sub"><span lang="ar" dir="rtl" class="w-sub-ar">ورقة تُزرع، وأثر يبقى</span>A paper that&rsquo;s planted, an impact that stays.</p>
       <div class="w-cta">
-        <button class="btn primary big" id="enter" type="button">Enter WARAQA for Business <span aria-hidden="true">→</span></button>
-        <span class="w-hint">or press <kbd>Space</kbd></span>
+        <button class="btn primary big" id="startDemo" type="button">Start the demo <span aria-hidden="true">→</span></button>
+        <button class="btn ghost big" id="startScratch" type="button">Start from scratch</button>
       </div>
     </div>
   </div>
 
   <div class="i-cap" id="introCap" aria-live="polite"></div>
-  <button class="i-skip" id="skip" type="button">Skip <kbd>Esc</kbd></button>
+  <button class="i-skip" id="skip" type="button">Skip</button>
 </div>
 
 <!-- ================= APP ================= -->
@@ -88,7 +88,7 @@
       <span class="mark" id="markSm"></span>
       <span class="bw"><b>WARAQA</b><small>for Business</small></span>
     </a>
-    <div class="acct" id="acct"></div>
+    <button class="acct" id="acct" type="button" aria-haspopup="menu" aria-label="Switch company"></button>
     <nav class="snav" id="snav">
       <a href="#/home" data-r="home"><i></i><span>Overview</span></a>
       <a href="#/studio" data-r="studio"><i></i><span>Design studio</span></a>
@@ -105,7 +105,7 @@
       <div class="top-r">
         <span class="today" id="todayLbl"></span>
         <button class="icon-btn" id="bell" type="button" aria-label="Notifications"><span id="bellIc"></span><i class="dot"></i></button>
-        <span class="avatar" id="avatar" aria-hidden="true"></span>
+        <button class="avatar" id="avatarBtn" type="button" aria-haspopup="menu" aria-label="Switch company"></button>
       </div>
     </header>
     <div class="view" id="view" tabindex="-1"></div>
@@ -123,19 +123,14 @@
 <div class="toast" id="toast" role="status" aria-live="polite"><i></i><span id="toastTxt"></span></div>
 <div class="fly-layer" id="flyLayer" aria-hidden="true"></div>
 
-<!-- discreet presenter controls (press D to show) -->
-<div class="dock" id="dock" hidden>
-  <b>Presenter</b>
-  <button type="button" data-act="intro">Replay opening</button>
-  <button type="button" data-act="next">Next order stage <kbd>N</kbd></button>
-  <button type="button" data-act="reset">New company</button>
-  <button type="button" data-act="close" aria-label="Hide presenter controls">×</button>
-</div>
+<div class="menu-scrim" id="menuScrim" hidden></div>
+<div class="menu" id="menu" role="menu" hidden></div>
 
-<script src="assets/vendor/qrcode.min.js?v=2"></script>
-<script src="assets/js/data.js?v=2"></script>
-<script src="assets/js/render.js?v=2"></script>
-<script src="assets/js/intro.js?v=2"></script>
-<script src="assets/js/app.js?v=2"></script>
+<script src="assets/vendor/qrcode.min.js?v=3"></script>
+<script src="assets/js/data.js?v=3"></script>
+<script src="assets/js/render.js?v=3"></script>
+<script src="assets/js/intro.js?v=3"></script>
+<script src="assets/js/factory.js?v=3"></script>
+<script src="assets/js/app.js?v=3"></script>
 </body>
 </html>

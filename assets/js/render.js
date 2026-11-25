@@ -71,11 +71,11 @@ W.logo = function(c, x, y, size, o){
     var w=size*(o.wide||2.4);
     return '<image href="'+c.logo+'" x="'+(x-w/2)+'" y="'+(y-size/2)+'" width="'+w+'" height="'+size+'" preserveAspectRatio="xMidYMid meet" style="mix-blend-mode:'+(o.light?'screen':'multiply')+'"/>';
   }
-  var ini=W.initials(c.name), r=size/2, s='';
+  var ini=W.mono(c), r=size/2, s='', isz=ini.length>2?.3:ini.length>1?.4:.5;
   s+='<g class="lg">';
   s+='<circle cx="'+x+'" cy="'+y+'" r="'+(r-size*.04)+'" fill="none" stroke="'+ink+'" stroke-width="'+(size*.055)+'"/>';
   s+='<path d="M'+(x-r*.62)+' '+(y+r*.62)+' A'+(r*.88)+' '+(r*.88)+' 0 0 1 '+(x+r*.62)+' '+(y-r*.62)+'" fill="none" stroke="'+ink+'" stroke-width="'+(size*.02)+'" opacity=".5"/>';
-  s+='<text x="'+x+'" y="'+(y+size*.155)+'" text-anchor="middle" class="t-mono-logo" font-size="'+(size*.42)+'" fill="'+ink+'">'+esc(ini)+'</text>';
+  s+='<text x="'+x+'" y="'+(y+size*isz*.36)+'" text-anchor="middle" class="t-mono-logo" font-size="'+(size*isz)+'" fill="'+ink+'">'+esc(ini)+'</text>';
   if(o.name!==false){
     var nm=(c.name||'').toUpperCase(); var fs=Math.min(size*.24, (size*5.2)/Math.max(6,nm.length)*1.1);
     s+='<text x="'+x+'" y="'+(y+r+fs*1.35)+'" text-anchor="middle" class="t-logo-name" font-size="'+fs+'" fill="'+ink+'">'+esc(nm)+'</text>';
@@ -85,7 +85,7 @@ W.logo = function(c, x, y, size, o){
 W.logoHTML = function(c, size){
   var col=c.color||'#123528';
   if(c.logo) return '<span class="clogo img" style="--s:'+size+'px"><img src="'+c.logo+'" alt=""></span>';
-  return '<span class="clogo" style="--s:'+size+'px;--c:'+col+'">'+esc(W.initials(c.name))+'</span>';
+  var m=W.mono(c); return '<span class="clogo" style="--s:'+size+'px;--c:'+col+';--f:'+(m.length>2?.28:m.length>1?.38:.48)+'">'+esc(m)+'</span>';
 };
 
 /* ---------- little helpers ---------- */
@@ -128,7 +128,7 @@ R.cards = function(c,o,f){
 R.invites = function(c,o,f){
   var ink=c.color, dark=f.style==='forest';
   var s=floor(300,420,240,26);
-  s+='<g transform="rotate(-7 230 220)" filter="url(#sh-soft)"><rect x="60" y="130" width="320" height="220" rx="4" fill="#1F4A36"/><path d="M60 130 L220 240 L380 130Z" fill="#245540"/><circle cx="220" cy="236" r="22" fill="#E7DBC1"/><circle cx="220" cy="236" r="17" fill="none" stroke="#C9B48A" stroke-width="2"/><text x="220" y="243" text-anchor="middle" class="t-mono-logo" font-size="17" fill="#8E7A4E">'+esc(W.initials(c.name))+'</text></g>';
+  s+='<g transform="rotate(-7 230 220)" filter="url(#sh-soft)"><rect x="60" y="130" width="320" height="220" rx="4" fill="#1F4A36"/><path d="M60 130 L220 240 L380 130Z" fill="#245540"/><circle cx="220" cy="236" r="22" fill="#E7DBC1"/><circle cx="220" cy="236" r="17" fill="none" stroke="#C9B48A" stroke-width="2"/><text x="220" y="243" text-anchor="middle" class="t-mono-logo" font-size="'+(W.mono(c).length>2?11:17)+'" fill="#8E7A4E">'+esc(W.mono(c))+'</text></g>';
   s+='<g transform="rotate(3 360 230)" filter="url(#sh-soft)">'+sheet(232,52,250,356,dark?'forest':(f.tone||'white'),33)+
      (dark?'':'<rect x="246" y="66" width="222" height="328" fill="none" stroke="'+ink+'" stroke-width="1" opacity=".4"/>')+
      W.logo(c,357,112,40,{ink:dark?'#E7DBC1':ink,light:dark})+
@@ -300,6 +300,18 @@ W.FIELDS = {
 
 /* ---------- catalogue icons ---------- */
 W.ICON = {
+  chev:'<path d="M7 10l5 5 5-5"/>',
+  drop:'<path d="M12 3s7 7.5 7 12a7 7 0 0 1-14 0c0-4.5 7-12 7-12z"/>',
+  people:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2c3 .2 5.5 2.6 5.5 5.8"/>',
+  expand:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
+  flip:'<path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/>',
+  spin:'<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/>',
+  send:'<path d="M4 12l16-8-6 16-2-7z"/>',
+  text:'<path d="M5 6V4h14v2M12 4v16M9 20h6"/>',
+  image:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/>',
+  pin:'<path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+  bolt:'<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>',
+  bin:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
   cards:'<path d="M5 6h14v13H5z"/><path d="M5 6l7 6 7-6"/>',
   invites:'<rect x="4" y="7" width="16" height="12" rx="1"/><path d="M4 8l8 6 8-6"/><circle cx="12" cy="4.5" r="1.5"/>',
   certs:'<rect x="3" y="5" width="18" height="12" rx="1"/><circle cx="12" cy="17" r="2.6"/><path d="M10.5 19.5l-1 2.5M13.5 19.5l1 2.5M7 9h10"/>',
@@ -330,10 +342,94 @@ W.icon = function(k,s){ return '<svg class="ic" width="'+(s||20)+'" height="'+(s
 
 /* ---------- passport link payload ---------- */
 W.encodePass = function(o,c){
-  var p={c:c.name, k:c.color, p:o.prod, s:o.seed, i:o.id, q:o.qty, m:o.maker, d:o.created.slice(0,10)};
+  var ff=o.f&&JSON.stringify(o.f).length<220?o.f:undefined; var p={c:c.name, n:W.mono(c), k:c.color, f:ff, p:o.prod, s:o.seed, i:o.id, q:o.qty, m:o.maker, d:o.created.slice(0,10)};
   try{ return btoa(unescape(encodeURIComponent(JSON.stringify(p)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }catch(e){ return ''; }
 };
 W.decodePass = function(s){
   try{ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4) s+='='; return JSON.parse(decodeURIComponent(escape(atob(s)))); }catch(e){ return null; }
+};
+
+/* ---------- the back of every item: how to plant it ---------- */
+W.drawBack = function(o,c){
+  var sd=W.seed(o.seed), ink=c.color||'#123528', s='';
+  s+='<svg class="pv-svg" viewBox="0 0 600 460" aria-hidden="true">'+floor(300,428,190,22);
+  s+='<g filter="url(#sh-soft)">'+sheet(165,30,270,384,'natural',131)+'</g>';
+  s+=leafIcon(186,52,26,'#2E7D4F')+'<text x="220" y="74" class="t-serif" font-size="26" fill="#1F4A36">Plant me</text>';
+  s+='<text x="416" y="72" text-anchor="start" class="t-ar" font-size="17" fill="#1F4A36" direction="rtl">ازرعني</text>';
+  s+='<image href="'+sd.img+'" x="186" y="92" width="228" height="104" preserveAspectRatio="xMidYMid slice" clip-path="inset(0 round 10px)"/>';
+  s+='<text x="186" y="218" class="t-sans" font-size="11" letter-spacing=".14em" fill="#5B6A61">SEEDS INSIDE</text><text x="186" y="238" class="t-serif" font-size="17" fill="#16231C">'+esc(sd.name)+'</text><text x="414" y="238" text-anchor="start" class="t-ar" font-size="14" fill="#16231C" direction="rtl">'+esc(sd.ar)+'</text>';
+  var steps=['Soak it in water for one hour','Lay it on soil by a bright window','Cover with a thin layer of soil','Keep moist. Shoots in '+sd.sprout];
+  steps.forEach(function(t,i){ var y=266+i*24; s+='<circle cx="196" cy="'+(y-4)+'" r="9" fill="#2E7D4F"/><text x="196" y="'+y+'" text-anchor="middle" class="t-sans" font-size="10" font-weight="700" fill="#fff">'+(i+1)+'</text><text x="214" y="'+y+'" class="t-sans" font-size="12" fill="#2B3A31">'+esc(t)+'</text>'; });
+  s+=pseudoQR(352,346,52,17);
+  s+='<text x="186" y="366" class="t-sans" font-size="10.5" fill="#3E5145">Scan to see whose paper</text><text x="186" y="380" class="t-sans" font-size="10.5" fill="#3E5145">this was and what it saved.</text>';
+  s+='<line x1="186" x2="414" y1="400" y2="400" stroke="#CFC6AF"/><text x="300" y="414" text-anchor="middle" class="t-sans" font-size="9" letter-spacing=".1em" fill="#5B6A61">MADE FROM '+esc((c.name||'').toUpperCase())+'’S PAPER · WARAQA</text>';
+  return s+'</svg>';
+};
+
+/* ---------- Waraqi, the studio assistant: a folded-paper robot in a WARAQA cap ---------- */
+W.robotSVG = function(){
+  return '<svg class="bot" viewBox="0 0 130 150" aria-hidden="true">'+
+    '<ellipse class="bot-sh" cx="65" cy="144" rx="30" ry="5" fill="#16231C" opacity=".15"/>'+
+    '<g class="bot-body">'+
+      // body: a folded sheet
+      '<path d="M38 82 h54 a6 6 0 0 1 6 6 v38 a6 6 0 0 1 -6 6 h-54 a6 6 0 0 1 -6 -6 v-38 a6 6 0 0 1 6 -6z" fill="url(#pp-white)" stroke="#D8D0BC"/>'+
+      '<path d="M32 104 h66" stroke="#D8D0BC" stroke-dasharray="3 3"/>'+
+      '<rect x="48" y="112" width="34" height="12" rx="3" fill="#123528"/><text x="65" y="121" text-anchor="middle" class="t-sans" font-size="7" font-weight="700" fill="#B9E0AE" letter-spacing=".08em">WARAQI</text>'+
+      '<circle cx="65" cy="94" r="5" fill="#7DBB7F"/><path d="M63 94 l1.5 1.5 3 -3" stroke="#123528" stroke-width="1.4" fill="none"/>'+
+      // arms
+      '<g class="bot-arm-l"><path d="M33 92 q-14 6 -14 20" stroke="#C9BFA6" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="8" y="110" width="20" height="26" rx="2" fill="url(#pp-mint)" stroke="#BFD3B6" transform="rotate(-8 18 123)"/><path d="M13 118 c0 -4 3 -7 7 -7 0 5 -3 7 -7 7z" fill="#2E7D4F" transform="rotate(-8 18 123)"/></g>'+
+      '<g class="bot-arm-r"><path d="M97 92 q14 -6 18 -22" stroke="#C9BFA6" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="115" cy="68" r="6" fill="#E9E2CF" stroke="#C9BFA6"/></g>'+
+      // neck + head
+      '<rect x="58" y="74" width="14" height="10" rx="3" fill="#C9BFA6"/>'+
+      '<rect x="30" y="34" width="70" height="44" rx="14" fill="url(#pp-white)" stroke="#D8D0BC"/>'+
+      '<rect x="38" y="42" width="54" height="28" rx="10" fill="#123528"/>'+
+      '<g class="bot-eyes" fill="#B9E0AE"><ellipse cx="54" cy="55" rx="4" ry="5"/><ellipse cx="76" cy="55" rx="4" ry="5"/></g>'+
+      '<path d="M58 63 q7 5 14 0" stroke="#B9E0AE" stroke-width="2" fill="none" stroke-linecap="round"/>'+
+      '<circle cx="44" cy="62" r="3" fill="#E58C8C" opacity=".35"/><circle cx="86" cy="62" r="3" fill="#E58C8C" opacity=".35"/>'+
+      // cap with WARAQA name and leaf logo
+      '<path d="M30 40 c0 -20 14 -30 35 -30 s35 10 35 30z" fill="#1F4A36"/>'+
+      '<path d="M26 40 h50 q30 0 38 6 q-6 4 -38 2 h-50z" fill="#173F30"/>'+
+      '<circle cx="65" cy="11" r="3.5" fill="#2E7D4F"/>'+
+      '<path d="M48 30 c0 -6 4 -10 10 -11 c0 6 -4 10 -10 11z" fill="#7DBB7F"/>'+
+      '<text x="70" y="31" text-anchor="middle" class="t-serif" font-size="9" fill="#EAF2EA" letter-spacing=".12em">WARAQA</text>'+
+      // sprout antenna
+      '<g class="bot-sprout"><path d="M65 8 v-8" stroke="#3F9A62" stroke-width="2" stroke-linecap="round"/><path d="M65 1 c-6 0 -9 -3 -9 -7 c5 0 9 3 9 7z" fill="#7DBB7F"/><path d="M65 -1 c6 0 9 -4 9 -8 c-5 0 -9 4 -9 8z" fill="#A9D7A2"/></g>'+
+    '</g></svg>';
+};
+
+/* ---------- Create your own: a free-form product from the toolbox ---------- */
+W.BASES = [
+  {id:'card',    name:'Folded card',   w:250, h:330},
+  {id:'sheet',   name:'A4 sheet',      w:420, h:300},
+  {id:'tag',     name:'Gift tag',      w:170, h:300, hole:true},
+  {id:'badge',   name:'Event badge',   w:220, h:310, slot:true},
+  {id:'coaster', name:'Coaster',       w:300, h:300, round:true},
+  {id:'sleeve',  name:'Box sleeve',    w:420, h:220}
+];
+W.base = function(id){ for(var i=0;i<W.BASES.length;i++) if(W.BASES[i].id===id) return W.BASES[i]; return W.BASES[0]; };
+W.drawCustom = function(spec,c,selected){
+  var b=W.base(spec.base), x0=300-b.w/2, y0=230-b.h/2, ink=c.color||'#123528', s='<svg class="pv-svg cu-svg" viewBox="0 0 600 460">';
+  s+=floor(300,y0+b.h+18,b.w*.6,18);
+  s+='<g filter="url(#sh-soft)">';
+  if(b.round) s+='<circle cx="300" cy="230" r="150" fill="url(#pp-'+spec.tone+')"/><circle cx="300" cy="230" r="150" fill="url(#g-sheen)" opacity=".5"/>';
+  else s+=sheet(x0,y0,b.w,b.h,spec.tone,77+b.w);
+  s+='</g>';
+  if(b.hole) s+='<circle cx="300" cy="'+(y0+26)+'" r="8" fill="#E9E2CF" stroke="#C9BFA6"/><path d="M300 '+(y0+26)+' C 290 '+(y0-20)+', 320 '+(y0-40)+', 306 '+(y0-70)+'" stroke="#2E7D4F" stroke-width="2" fill="none"/>';
+  if(b.slot) s+='<rect x="280" y="'+(y0+14)+'" width="40" height="8" rx="4" fill="#E9E2CF" stroke="#C9BFA6"/>';
+  if(b.id==='card') s+='<line x1="'+x0+'" x2="'+(x0+b.w)+'" y1="'+(y0+4)+'" y2="'+(y0+4)+'" stroke="rgba(0,0,0,.08)" stroke-width="3"/>';
+  if(b.id==='sleeve') s+='<line x1="'+(x0+40)+'" x2="'+(x0+40)+'" y1="'+y0+'" y2="'+(y0+b.h)+'" stroke="rgba(0,0,0,.08)"/><line x1="'+(x0+b.w-40)+'" x2="'+(x0+b.w-40)+'" y1="'+y0+'" y2="'+(y0+b.h)+'" stroke="rgba(0,0,0,.08)"/>';
+  (spec.els||[]).forEach(function(e,i){
+    var ex=x0+e.x/100*b.w, ey=y0+e.y/100*b.h, k=e.size||1, inner='';
+    if(e.type==='logo') inner=W.logo(c,ex,ey,48*k,{ink:ink});
+    else if(e.type==='text') inner='<text x="'+ex+'" y="'+ey+'" text-anchor="middle" class="t-serif" font-size="'+(22*k)+'" fill="'+ink+'">'+esc(e.text)+'</text>';
+    else if(e.type==='ar') inner='<text x="'+ex+'" y="'+ey+'" text-anchor="middle" class="t-ar" font-size="'+(26*k)+'" fill="'+ink+'" direction="rtl">'+esc(e.text)+'</text>';
+    else if(e.type==='qr') inner=pseudoQR(ex-26*k,ey-26*k,52*k,23);
+    else if(e.type==='leaves'){ for(var j=0;j<5;j++) inner+=leafIcon(ex-50*k+j*22*k,ey-10*k+(j%2)*8*k,20*k,j%2?'#7DBB7F':'#2E7D4F'); }
+    else if(e.type==='seed') inner=leafIcon(ex-70*k,ey-10*k,14*k,'#2E7D4F')+'<text x="'+(ex-52*k)+'" y="'+ey+'" class="t-sans" font-size="'+(11*k)+'" fill="#3E5145">Plant me · '+esc(W.seed(spec.seed).name)+'</text>';
+    else if(e.type==='photo') inner='<image href="'+(e.src||'assets/img/photo-spiral.webp')+'" x="'+(ex-60*k)+'" y="'+(ey-40*k)+'" width="'+(120*k)+'" height="'+(80*k)+'" preserveAspectRatio="xMidYMid slice"/>';
+    s+='<g class="cu-el'+(i===selected?' sel':'')+'" data-i="'+i+'">'+inner+'</g>';
+  });
+  if(spec.border) s+= b.round? '<circle cx="300" cy="230" r="136" fill="none" stroke="'+ink+'" stroke-width="1.2" opacity=".5"/>' : '<rect x="'+(x0+12)+'" y="'+(y0+12)+'" width="'+(b.w-24)+'" height="'+(b.h-24)+'" fill="none" stroke="'+ink+'" stroke-width="1.2" opacity=".5"/>';
+  return s+'</svg>';
 };
 })();
