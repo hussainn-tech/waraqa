@@ -95,7 +95,7 @@ function menuPick(e){
   var b=e.target.closest('button'); if(!b) return;
   if(b.dataset.demo){ W.createDemo(b.dataset.demo); draft=null; custom=null; closeMenu(); go('#/home'); toast('Now showing '+W.S.company.name+' (illustrative demo data).'); }
   else if(b.dataset.act==='scratch'){ closeMenu(); go('#/start'); }
-  else if(b.dataset.act==='intro'){ closeMenu(); window.scrollTo(0,0); W.introPlay(); }
+  else if(b.dataset.act==='intro'){ closeMenu(); window.scrollTo(0,0); W.introPlay({sound:true}); }
 }
 
 /* =====================================================================
@@ -818,10 +818,13 @@ function boot(){
   $('#startScratch').onclick=function(){ draft=null; custom=null; location.hash='#/start'; W.introExit(function(){ var n=$('#cName'); if(n) n.focus({preventScroll:true}); }); };
   $('#skip').onclick=function(){ W.introSkip(); };
   if(isPass||noIntro){ document.body.classList.remove('intro-on'); render(); }
-  else { render(); W.introPlay(); }
+  else { render(); W.introPlay({gate:true}); }
+  $('#gateGo').onclick=function(){ W.introBegin(true); };
+  $('#gateQuiet').onclick=function(){ W.introBegin(false); };
+  $('#soundBtn').onclick=function(){ W.introSoundToggle(); };
 
   document.addEventListener('keydown',function(e){
-    if(W.introActive()){ if(e.key==='Escape'){ e.preventDefault(); W.introSkip(); } return; }
+    if(W.introActive()){ if(W.introGated()){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); W.introBegin(true); } return; } if(e.key==='Escape'){ e.preventDefault(); W.introSkip(); } return; }
     if(e.key==='Escape') closeMenu();
     if(e.target.closest && e.target.closest('input,textarea,select,button')) return;
     if(e.key==='n'||e.key==='N'){ nextStage(); }

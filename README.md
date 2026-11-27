@@ -10,7 +10,7 @@ This repository is the live product demo for the **Mutamahin Startup Pitch Chall
 
 | Time | What you do | What the judges see |
 |------|-------------|---------------------|
-| 0–10 s | Open the page | Yesterday's waste: an office memo flutters down, is shredded, swirls into pulp while seeds fall in, and the fibres grow into a living leaf that becomes the WARAQA mark. |
+| 0–10 s | Open the page, tap **Tap to begin** | Yesterday's waste: an office memo flutters down, is shredded, swirls into pulp while seeds fall in, and the fibres grow into a living leaf that becomes the WARAQA mark. |
 | 10 s | Tap **Start the demo** | The app opens through the leaf, on Alba's account (illustrative data). |
 | 10–20 s | Overview | Paper flowing from Alba's bins into products, recyclers and stock; a live studio feed; impact so far; the plan and upcoming occasions. |
 | 20–38 s | **Design** on an occasion, switch product, tap the preview | Waraqi the studio robot greets the team. The live mock-up carries Alba's logo. Tap it for a 3D showcase: turn it, flip it to the planting guide, plant it. **Place order** packs it into a WARAQA box. |
@@ -25,6 +25,10 @@ Tap the company card in the sidebar (or the logo at the top right on a phone) to
 - switch between four demo companies: Alba (main), National Bank of Bahrain, Bapco Energies and University of Bahrain (logos from Wikimedia; all figures are illustrative),
 - start from scratch,
 - replay the opening.
+
+## Sound
+
+The opening has its own soundtrack, generated live in the browser (`assets/js/sound.js`), with no audio files and no licences: paper flutter and sparse felt piano, a muffled shred, a water swirl with seed ticks, then a warm swell, an oud-style phrase and a chime as the leaf forms, resolving and fading out by 10 seconds so you can speak. Browsers only allow sound after a tap, so the page opens on **Tap to begin** (or **Start without sound**). The speaker button at the top left mutes it; the setting is remembered.
 
 ## What is in the app
 
@@ -60,6 +64,7 @@ assets/css/app.css      all styling and animation
 assets/js/data.js       plans, products, seeds, occasions, activities, demo companies, saved state
 assets/js/render.js     seed-paper textures, client logo, product mock-ups (front and back), Waraqi, custom builder, icons
 assets/js/intro.js      the opening film (canvas particles + SVG leaf)
+assets/js/sound.js      the opening's generated soundtrack (Web Audio)
 assets/js/factory.js    the illustrated studio for the production tracker
 assets/js/app.js        screens, routing, order flow, showcase, ESG writer and PDF, WARAQA Days, passport
 assets/img/             team photos and seed photos

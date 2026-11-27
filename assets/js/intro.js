@@ -249,7 +249,8 @@ function veinlets(){
 }
 
 /* ---------- public ---------- */
-W.introPlay = function(){
+W.introPlay = function(o){
+  o=o||{};
   done=false; parts=[]; seeds=[]; lastCap=''; phase='';
   if(!cv) build();
   veinlets();
@@ -259,19 +260,34 @@ W.introPlay = function(){
   sheet.style.opacity=0; leafSvg.querySelector('#leafSeeds').innerHTML='';
   paintMemo(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ if(!parts.length) paintMemo(); });
   cap.classList.remove('on'); cap.innerHTML='';
+  soundIcon();
   if(reduce){ intro.classList.add('solid','lock','cta'); drawMotes(0); return; }
-  cancelAnimationFrame(raf); t0=performance.now(); raf=requestAnimationFrame(frame);
+  if(o.gate){ intro.classList.add('gated'); cancelAnimationFrame(raf); cx.clearRect(0,0,Wd,Ht); var g=$('#gateGo'); if(g) setTimeout(function(){ g.focus({preventScroll:true}); },50); return; }
+  begin(o.sound!==false);
 };
+function begin(withSound){
+  intro.classList.remove('gated');
+  if(withSound && W.Sound) W.Sound.play();
+  cancelAnimationFrame(raf); t0=performance.now(); raf=requestAnimationFrame(frame);
+}
+W.introBegin = function(withSound){ if(intro && intro.classList.contains('gated')) begin(withSound); };
+W.introGated = function(){ return !!(intro && intro.classList.contains('gated')); };
+function soundIcon(){ var b=$('#soundBtn'); if(!b||!W.Sound) return; var on=W.Sound.enabled(); b.classList.toggle('off',!on); b.setAttribute('aria-label', on?'Sound on. Tap to mute':'Sound off. Tap to unmute'); b.setAttribute('aria-pressed', on?'true':'false'); }
+W.introSoundToggle = function(){ if(!W.Sound) return; var on=W.Sound.toggle(); soundIcon(); if(on && !intro.classList.contains('gated') && !done && (performance.now()-t0)<1500) W.Sound.play(); };
 W.introSkip = function(){
   if(done) return;
+  if(intro.classList.contains('gated')) intro.classList.remove('gated');
+  if(W.Sound) W.Sound.stop();
   parts=[]; seeds=[]; sheet.style.opacity=0; shadow.style.opacity=0; cap.classList.remove('on');
   t0 = performance.now() - T.cta*1000; // jump to the end; motes keep moving
   intro.classList.add('solid','lock','cta'); if(cx) cx.clearRect(0,0,Wd,Ht);
+  cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
 };
 
 /* the app grows out of the leaf: a leaf-shaped window that opens to full screen */
 W.introExit = function(after){
   if(done) return; done=true;
+  if(W.Sound) W.Sound.stop();
   var app=document.getElementById('app'), r=leafRect();
   var cxp=r.left+r.width*(236/400), cyp=r.top+r.height*(190/400), s0=r.width/400;
   function pathAt(k){ var s=s0*k, P=LEAF_PTS.map(function(p){ return (cxp+(p[0]-236)*s).toFixed(1)+' '+(cyp+(p[1]-190)*s).toFixed(1); });
