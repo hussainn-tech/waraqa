@@ -625,9 +625,6 @@ function renderImpact(){
      '<form id="manual" class="manual"><input class="inp" type="date" id="mDate" required aria-label="Pickup date"><input class="inp" type="number" id="mKg" min="1" placeholder="kg" required aria-label="Kilograms"><button class="btn dark small" type="submit">Add</button></form></div>'+
      '<p class="muted" style="font-size:12px;margin-top:10px">CSV format: one line per pickup, for example <code>2026-11-02, 240</code>.</p>'+
      (S.pickups.some(function(p){return p.imported})?'<p class="pill" style="margin-top:8px">'+S.pickups.filter(function(p){return p.imported}).length+' imported records</p>':'')+'</div>';
-  h+='<div class="card why rv d6"><span class="eyebrow" style="color:#B9E0AE">Why it matters in Bahrain</span><div class="why-g">'+
-     '<div><b>1.48M</b><span>tonnes of municipal waste collected in 2025, up 5% in a year</span></div><div><b>4 in 5</b><span>tonnes went to landfill in 2024. Recycling fell to 18%</span></div><div><b>+30%</b><span>waste from business, now the second-largest source</span></div></div>'+
-     '<small>Sources: Ministry of Municipalities Affairs and Agriculture via GDN (2025); government figures via Daily Tribune (2024).</small></div>';
   h+='</div>';
   view.innerHTML=h;
   countUp(view);
@@ -665,7 +662,7 @@ function writeESG(){
 function loadScript(src,cb){ if(window.jspdf) return cb(); var s=document.createElement('script'); s.src=src; s.onload=cb; s.onerror=function(){ toast('Could not load the PDF tool.'); }; document.head.appendChild(s); }
 function makePDF(){
   var b=$('#pdfBtn'), lbl=b.querySelector('span'); b.disabled=true; lbl.textContent='Preparing PDF…';
-  loadScript('assets/vendor/jspdf.umd.min.js?v=4',function(){ try{ buildPDF(); toast('Your ESG report is downloading.'); }catch(e){ console.error(e); toast('Sorry, the PDF could not be made here.'); } b.disabled=false; lbl.textContent='Download ESG report (PDF)'; });
+  loadScript('assets/vendor/jspdf.umd.min.js?v=5',function(){ try{ buildPDF(); toast('Your ESG report is downloading.'); }catch(e){ console.error(e); toast('Sorry, the PDF could not be made here.'); } b.disabled=false; lbl.textContent='Download ESG report (PDF)'; });
 }
 function buildPDF(){
   var S=W.S, c=S.company, T=W.totals(), i=T.imp, pl=W.plan(S.plan);

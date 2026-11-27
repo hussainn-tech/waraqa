@@ -4,7 +4,9 @@
 var W = window.W, esc = W.esc;
 var SW = 460, H = 300, FLOOR = 252;
 
+var FEMALE=/^(Fatima|Fatema|Noora|Zainab|Maryam|Aysha|Sara|Layla|Nasreen|Mariam)\b/i;
 function maker(x, v, name, opt){
+  if(name) v = FEMALE.test(name) ? 'hijab' : 'ghutra';   // clothing always matches the maker's name
   opt=opt||{}; var skin=opt.skin||'#C98E68', shirt=opt.shirt||'#EDE7D6', s='<g class="mk'+(opt.cls?' '+opt.cls:'')+'" transform="translate('+x+' '+FLOOR+')">';
   s+='<ellipse cx="0" cy="2" rx="18" ry="3.5" fill="#000" opacity=".25"/>';
   s+='<rect x="-9" y="-30" width="7" height="30" rx="3" fill="#2B3530"/><rect x="2" y="-30" width="7" height="30" rx="3" fill="#2B3530"/>';

@@ -90,7 +90,7 @@ function sampleLeaf(n){
 
 /* ---------- the paper turns into particles ---------- */
 function shatter(){
-  var r=sheet.getBoundingClientRect(), area=r.width*r.height, N=Math.round(Math.max(1500,Math.min(5200,Wd*Ht/250))), st=Math.sqrt(area/N);
+  var r=sheet.getBoundingClientRect(), area=r.width*r.height, N=Math.round(Math.max(1500,Math.min(6500,area/42,Wd*Ht/200))), st=Math.sqrt(area/N);
   parts=[];
   var L=leafRect(), sx=L.width/400, sy=L.height/400;
   ptsLeaf = sampleLeaf(Math.ceil(area/(st*st))+20);
@@ -166,7 +166,7 @@ function frame(now){
       // shred
       var ds=clamp((t-T.shred-q.strip*.028)/.75), e1=ds*ds;
       var shx=q.x0+(q.strip-5.5)*e1*Math.min(16,Wd*.012) + Math.sin(q.y0*.05+t*3)*e1*2;
-      var shy=q.y0+e1*(Ht*.07+q.h*Ht*.05)+(q.strip%2?1:-1)*e1*10;
+      var shy=q.y0+e1*(Ht*.035+q.h*Ht*.03)+(q.strip%2?1:-1)*e1*8;
       // pulp orbit
       var om=(1.4+ 70/(q.r+30)), ang=q.a+om*(t-T.pulp)*1.25;
       var ox=CX+Math.cos(ang)*q.r*1.35, oy=CY+Math.sin(ang)*q.r*.62+Math.sin(t*2+q.a)*3;
