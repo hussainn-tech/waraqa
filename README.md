@@ -28,7 +28,7 @@ Tap the company card in the sidebar (or the logo at the top right on a phone) to
 
 ## Sound
 
-The opening has its own soundtrack, generated live in the browser (`assets/js/sound.js`), with no audio files and no licences: paper flutter and sparse felt piano, a muffled shred, a water swirl with seed ticks, then a warm swell, an oud-style phrase and a chime as the leaf forms, resolving and fading out by 10 seconds so you can speak. Browsers only allow sound after a tap, so the page opens on **Tap to begin** (or **Start without sound**). The speaker button at the top left mutes it; the setting is remembered.
+The opening has its own soundtrack, generated live in the browser (`assets/js/sound.js`), with no audio files and no licences: paper flutter and sparse felt piano, a muffled shred, a water swirl with seed ticks, then a warm swell, an oud-style phrase and a chime as the leaf forms, resolving and fading out by 10 seconds so you can speak. Browsers only allow sound after a tap, so the page opens on **Tap to begin**. The speaker button at the top left mutes it; the setting is remembered.
 
 ## What is in the app
 

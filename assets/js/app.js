@@ -662,7 +662,7 @@ function writeESG(){
 function loadScript(src,cb){ if(window.jspdf) return cb(); var s=document.createElement('script'); s.src=src; s.onload=cb; s.onerror=function(){ toast('Could not load the PDF tool.'); }; document.head.appendChild(s); }
 function makePDF(){
   var b=$('#pdfBtn'), lbl=b.querySelector('span'); b.disabled=true; lbl.textContent='Preparing PDF…';
-  loadScript('assets/vendor/jspdf.umd.min.js?v=5',function(){ try{ buildPDF(); toast('Your ESG report is downloading.'); }catch(e){ console.error(e); toast('Sorry, the PDF could not be made here.'); } b.disabled=false; lbl.textContent='Download ESG report (PDF)'; });
+  loadScript('assets/vendor/jspdf.umd.min.js?v=6',function(){ try{ buildPDF(); toast('Your ESG report is downloading.'); }catch(e){ console.error(e); toast('Sorry, the PDF could not be made here.'); } b.disabled=false; lbl.textContent='Download ESG report (PDF)'; });
 }
 function buildPDF(){
   var S=W.S, c=S.company, T=W.totals(), i=T.imp, pl=W.plan(S.plan);
@@ -820,7 +820,6 @@ function boot(){
   if(isPass||noIntro){ document.body.classList.remove('intro-on'); render(); }
   else { render(); W.introPlay({gate:true}); }
   $('#gateGo').onclick=function(){ W.introBegin(true); };
-  $('#gateQuiet').onclick=function(){ W.introBegin(false); };
   $('#soundBtn').onclick=function(){ W.introSoundToggle(); };
 
   document.addEventListener('keydown',function(e){
